@@ -1,7 +1,11 @@
 class SightingsController < ApplicationController
     def index
+      if params[:start_date] && params[:end_date]
         sightings = Sighting.where(date: params[:start_date]..params[:end_date])
-        render json: sightings, include: [:animal]
+      else
+        sightings = Sighting.all
+      end
+        render json: sightings
     end
 
     def show
@@ -43,6 +47,6 @@ class SightingsController < ApplicationController
 
     private
     def sighting_params
-        params.require(:sighting).permit(:animal_id, :latitude, :longitutde, :date)
+        params.require(:sighting).permit(:animal_id, :latitude, :longitude, :date)
     end
 end

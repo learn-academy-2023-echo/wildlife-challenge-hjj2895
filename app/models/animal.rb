@@ -5,6 +5,8 @@ class Animal < ApplicationRecord
     validates :binomial, uniqueness: true
     validate :name_not_matching_binomial
 
+    accepts_nested_attributes_for :sightings
+
     def name_not_matching_binomial
         if self.name == self.binomial
             errors.add :name, "Name cannot match binomial"
